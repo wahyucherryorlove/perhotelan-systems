@@ -1,4 +1,10 @@
 <?php
+session_start();
+if( !isset($_SESSION['login'])) {
+    header("location: ../user/index.html");
+    exit;
+}
+
 include "../connect/index.php";
 ?>
 
@@ -41,10 +47,11 @@ include "../connect/index.php";
             <div class="navbar-collapse collapse" id="navbar-content">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a href="menu.php?pages=Dashboard" class="nav-link"><i class="bi bi-house-door-fill pe-1"></i> Home</a></li>
-                    <li class="nav-item"><a href="menu.php?pages=Kamar Hotel" class="nav-link"><i class="bi bi-lamp-fill pe-1"></i> Kamar Hotel</a></li>
+                    <li class="nav-item"><a href="menu.php?pages=Kamar-Hotel" class="nav-link"><i class="bi bi-lamp-fill pe-1"></i> Kamar Hotel</a></li>
+                    <li class="nav-item"><a href="menu.php?pages=Data-Users" class="nav-link"><i class="bi bi-people-fill pe-1"></i> Management User</a>
                     <li class="nav-item"><a href="menu.php?pages=Transaksi" class="nav-link"><i class="bi bi-bookmark-fill pe-1"></i> Transaksi</a></li>
                     <li class="nav-item"><a href="menu.php?pages=Laporan" class="nav-link"><i class="bi bi-book-fill pe-1"></i> Laporan</a></li>
-                    <li class="nav-item"><a href="../logout.php" class="nav-link"><i class="bi bi-door-open-fill pe-1"></i> Logout</a></li>
+                    <li class="nav-item"><a href="../user/logout.php" class="nav-link"><i class="bi bi-door-open-fill pe-1"></i> Logout</a></li>
                 </ul>
             </div>
         </div>
@@ -60,24 +67,42 @@ include "../connect/index.php";
         case 'Dashboard':
             include "dashboard.php";
             break;
-        case 'Kamar Hotel':
+        case 'Kamar-Hotel':
             include "kamar.php";
             break;
-        case 'Data Kamar Hotel':
+        case 'Data-Kamar-Hotel':
             include "data-kamar.php";
             break;
-        case 'Edit Data Kamar Hotel':
+        case 'Edit-Data-Kamar-Hotel':
             include "edit-kamar.php";
             break;
-        case 'Tambah Data Kamar':
+        case 'Tambah-Data-Kamar':
             include "tambah-kamar.php";
             break;
-        case 'Reservasi Kamar Hotel':
+        case 'Data-Users':
+            include "data-user.php";
+            break;
+        case 'Edit-Data-User':
+            include "edit-user.php";
+            break;
+        case 'Tambah-Data-Users':
+            include "tambah-user.php";
+            break;
+        case 'Reservasi-Kamar-Hotel':
             include "reservasi.php";
             break;
-            case 'Proses Data':
-                include "../connect/proses.php";
-                break;
+        case 'Transaksi':
+            include "data-transaksi.php";
+            break;
+        case 'Transaksi-Kamar':
+            include "transaksi.php";
+            break;
+        case 'Proses-Data':
+            include "../connect/proses.php";
+            break;
+        case 'Laporan':
+            include "laporan.php";
+            break;
         default:
             include "../404/404.html";
             break;
@@ -127,8 +152,6 @@ include "../connect/index.php";
             // Data Tables
             $(".table-data").DataTable();
         });
-
-
     </script>
 </body>
 

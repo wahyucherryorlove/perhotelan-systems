@@ -10,7 +10,7 @@ $conn = mysqli_connect($host, $username, $password, $database);
 function add()
 {
     $add =
-    "<script>
+        "<script>
         Swal.fire({
             icon: 'error',
             title: 'Opps',
@@ -24,7 +24,7 @@ function add()
 function edit()
 {
     $add =
-    "<script>
+        "<script>
         Swal.fire({
             icon: 'error',
             title: 'Opps',
@@ -52,6 +52,19 @@ function query($query)
 function select_kamar()
 {
     $result = query("SELECT * FROM tbl_kamar");
+    return $result;
+}
+
+// Select Customers
+function select_user()
+{
+    $result = query("SELECT * FROM tbl_user");
+    return $result;
+}
+// Select Edit Data Customer
+function select_edit_user($kode)
+{
+    $result = query("SELECT * FROM tbl_user WHERE id = '$kode'");
     return $result;
 }
 
@@ -85,6 +98,42 @@ function add_kamar($add_kamar)
     return mysqli_affected_rows($conn);
 }
 
+function add_user($add_user)
+{
+    global $conn;
+    $nama = htmlspecialchars(ucwords($add_user['nama']));
+    $username = htmlspecialchars($add_user['email']);
+    $password = htmlspecialchars(stripslashes(mysqli_escape_string($conn, $add_user['password'])));
+    $nik = htmlspecialchars($add_user['nik']);
+    $telepon = htmlspecialchars($add_user['telepon']);
+    $role = htmlspecialchars($add_user['role']);
+    $daftar = date("d-m-Y");
+
+    $password = password_hash($password, PASSWORD_DEFAULT);
+
+    $conn->query("INSERT INTO tbl_user VALUES('','$nama','$username','$password','$nik','$telepon','$role','0','0','$daftar')");
+
+    return mysqli_affected_rows($conn);
+}
+
+// Edit Customer
+function edit_user($edit_user)
+{
+    global $conn;
+    $kode = htmlspecialchars($edit_user['id']);
+    $nama = htmlspecialchars(ucwords($edit_user['nama']));
+    $username = htmlspecialchars($edit_user['email']);
+    $nik = htmlspecialchars($edit_user['nik']);
+    $telepon = htmlspecialchars($edit_user['telepon']);
+    $role = htmlspecialchars($edit_user['role']);
+    $aktif = htmlspecialchars($edit_user['aktif']);
+    $status = htmlspecialchars($edit_user['status']);
+
+    $conn->query("UPDATE tbl_user SET nama = '$nama', username = '$username', nik = '$nik', telepon = '$telepon', role = '$role', aktif = '$aktif', status = '$status' WHERE id = '$kode'");
+
+    return mysqli_affected_rows($conn);
+}
+
 // Edit/Update Hotel Room
 function edit_kamar($edit_kamar)
 {
@@ -93,6 +142,7 @@ function edit_kamar($edit_kamar)
     $nama = htmlspecialchars(ucwords($edit_kamar['nama']));
     $harga = htmlspecialchars($edit_kamar['harga']);
     $keterangan = htmlspecialchars($edit_kamar['keterangan']);
+    $aktif = htmlspecialchars($edit_kamar['aktif']);
     $photoLama = htmlspecialchars($edit_kamar['photoLama']);
 
     if ($_FILES['photo']['error'] === 4) {
@@ -101,13 +151,22 @@ function edit_kamar($edit_kamar)
         $photo = upload();
     }
 
-    $conn->query("UPDATE tbl_kamar SET nama = '$nama', harga = '$harga', keterangan = '$keterangan', photo = '$photo' WHERE kd_kamar = '$kode'");
+    $conn->query("UPDATE tbl_kamar SET nama = '$nama', harga = '$harga', keterangan = '$keterangan', aktif = '$aktif', photo = '$photo' WHERE kd_kamar = '$kode'");
 
     return mysqli_affected_rows($conn);
 }
 
+// Delete Customer
+function delete_user($kode)
+{
+    global $conn;
+    $conn->query("DELETE FROM tbl_user WHERE kd_user = '$kode'");
+    return mysqli_affected_rows($conn);
+}
+
 // Delete Hotel Room
-function delete_kamar($kode) {
+function delete_kamar($kode)
+{
     global $conn;
     $conn->query("DELETE FROM tbl_kamar WHERE kd_kamar = '$kode'");
 
@@ -115,7 +174,8 @@ function delete_kamar($kode) {
 }
 
 // Reservasi Kamar
-function reservasi_kamar($kode) {
+function reservasi_kamar($kode)
+{
     global $conn;
     $data = $conn->query("SELECT * FROM tbl_kamar WHERE kd_kamar = '$kode'");
     $xx = [];
@@ -127,7 +187,8 @@ function reservasi_kamar($kode) {
 }
 
 // Add Reservasi Kamar
-function add_reservasi_kamar($add_reservasi) {
+function add_reservasi_kamar($add_reservasi)
+{
     global $conn;
     $kodeTransaksiDetail = $conn->query("SELECT max(kd_transaksi) as kode_transaksi FROM transaksi");
     $kodeTransaksi = $kodeTransaksiDetail->fetch_assoc();
@@ -142,11 +203,63 @@ function add_reservasi_kamar($add_reservasi) {
     $lamaMenginap = htmlspecialchars($add_reservasi['lamaMenginap']);
     $harga = ($add_reservasi['harga'] * $lamaMenginap);
     $tglMenginap = date('Y-m-d');
+    $user = htmlspecialchars($add_reservasi['user']);
 
     $conn->query("UPDATE tbl_kamar SET aktif = '1' WHERE kd_kamar = '$kodeKamar'");
-    $conn->query("INSERT INTO transaksi VALUES('','$kodeReal','$kodeKamar','$harga','$tglMenginap','$lamaMenginap','002','1')");
+    $conn->query("UPDATE tbl_user SET status = '1' WHERE id = '$user'");
+    $conn->query("INSERT INTO transaksi VALUES('','$kodeReal','$kodeKamar','$harga','$tglMenginap','$lamaMenginap','$user','1')");
 
     return mysqli_affected_rows($conn);
+}
+
+// Transaksi Pembayaran
+function select_data_transaksi()
+{
+    global $conn;
+    $result = query("SELECT * FROM transaksi WHERE status = '1'");
+    return $result;
+}
+function select_data_transaksi_sebelum()
+{
+    global $conn;
+    $result = query("SELECT * FROM transaksi WHERE status = '0'");
+    return $result;
+}
+
+function select_transaksi_pembayaran($kode)
+{
+    global $conn;
+    $result = query("SELECT * FROM transaksi WHERE kd_transaksi = '$kode'");
+
+    return $result;
+}
+
+function edit_reservasi_kamar($edit_transaksi)
+{
+    global $conn;
+
+    $kode = htmlspecialchars($edit_transaksi['kode']);
+    $total = htmlspecialchars($edit_transaksi['total']);
+    $bayar = htmlspecialchars($edit_transaksi['bayar']);
+    $kembalian = htmlspecialchars($edit_transaksi['kembali']);
+
+    if ($bayar < $total) {
+        return false;
+    } else {
+
+        $conn->query("UPDATE transaksi SET status = '0' WHERE kd_transaksi = '$kode'");
+        $conn->query("INSERT INTO pembayaran VALUES('','$kode','$total','$bayar','$kembalian')");
+        return mysqli_affected_rows($conn);
+    }
+}
+
+// Laporan
+function select_laporan()
+{
+    global $conn;
+    $result = query("SELECT * FROM pembayaran");
+
+    return $result;
 }
 
 function upload()
@@ -179,6 +292,6 @@ function upload()
 
     // Tempat File Sementara
     move_uploaded_file($tempat, "../assets/profile/" . $fileNewName);
-    
+
     return $fileNewName;
 }

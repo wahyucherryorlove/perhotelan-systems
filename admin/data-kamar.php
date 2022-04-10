@@ -3,7 +3,7 @@
         <div class="card">
             <div class="card-header d-sm-flex justify-content-between align-items-center">
                 <h2 class="mb-3 m-md-0 fs-4 ff-poppins">Data Kamar</h2>
-                <a href="menu.php?pages=Tambah Data Kamar" class="btn d-block btn-primary">Tambah Data</a>
+                <a href="menu.php?pages=Tambah-Data-Kamar" class="btn d-block btn-primary">Tambah Data</a>
             </div>
             <div class="card-body">
                 <div class="overflow-auto px-2 py-2 overflow-md-hidden">
@@ -37,7 +37,7 @@
                                         ?>
                                     </td>
                                     <td>
-                                        <a href="menu.php?pages=Edit Data Kamar Hotel&kode=<?= $hasil['kd_kamar']; ?>" class="btn btn-warning btn-sm">Edit</a> || <a data-href="../connect/proses.php?aksi=delete_kamar&kode=<?= $hasil['kd_kamar'] ?>" class="btn btn-danger btn-sm delete">Delete</a>
+                                        <a href="menu.php?pages=Edit-Data-Kamar-Hotel&kode=<?= $hasil['kd_kamar']; ?>" class="btn btn-warning btn-sm">Edit</a> || <a data-href="../connect/proses.php?aksi=delete_kamar&kode=<?= $hasil['kd_kamar'] ?>" class="btn btn-danger btn-sm delete">Delete</a>
                                     </td>
                                 </tr>
                             <?php } ?>

@@ -19,13 +19,13 @@
         <div class="card shadow">
             <div class="head card-header d-md-flex align-items-center justify-content-between">
                 <h2 class="ff-poppins fs-4 mb-3 m-md-0 d-block">Kamar Hotel</h2>
-                <a href="menu.php?pages=Data Kamar Hotel" class="btn btn-outline-primary d-block">Data Kamar</a>
+                <a href="menu.php?pages=Data-Kamar-Hotel" class="btn btn-outline-primary d-block">Data Kamar</a>
             </div>
             <div class="card-body">
                 <div class="row justify-content-center">
                     <?php foreach (select_kamar() as $x) { ?>
                         <div class="col-lg-3">
-                            <div class="card shadow">
+                            <div class="card shadow mb-3">
                                 <div class="card-body">
                                     <div class="head text-center">
                                         <img src="../assets/profile/<?= $x['photo'] ?>" alt="Background1" style="height: 200px; width: 100%;" class="img-thumbnail">
@@ -60,7 +60,7 @@
                                                     <?php
                                                     if ($x['aktif'] === "0") {
                                                     ?>
-                                                        <a href="menu.php?pages=Reservasi Kamar Hotel&kode=<?= $x['kd_kamar']; ?>" class="btn btn-sm btn-success">Reservasi</a>
+                                                        <a href="menu.php?pages=Reservasi-Kamar-Hotel&kode=<?= $x['kd_kamar']; ?>" class="btn btn-sm btn-success">Reservasi</a>
                                                     <?php } else {
                                                         echo '<a class="btn btn-sm btn-danger disabled">Reservasi</a>';
                                                     }

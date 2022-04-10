@@ -27,7 +27,7 @@
                         confirmButtonText: 'Mengerti',
                         timer: 2000, 
                     }).then(()=> {
-                        document.location.href = '../admin/menu.php?pages=Data Kamar Hotel';
+                        document.location.href = '../admin/menu.php?pages=Data-Kamar-Hotel';
                     });
                 </script>";
             }
@@ -45,7 +45,7 @@
                         confirmButtonText: 'Mengerti',
                         timer: 2000,
                     }).then(()=> {
-                        document.location.href = '../admin/menu.php?pages=Data Kamar Hotel';
+                        document.location.href = '../admin/menu.php?pages=Data-Kamar-Hotel';
                     });
                 </script>";
             } else {
@@ -59,7 +59,7 @@
                         confirmButtonText: 'Batalkan',
                         timer: 2000,
                     }).then(()=> {
-                        document.location.href = '../admin/menu.php?pages=Data Kamar Hotel';
+                        document.location.href = '../admin/menu.php?pages=Data-Kamar-Hotel';
                     });
                 </script>";
             }
@@ -77,13 +77,13 @@
                     confirmButtonText: 'Mengerti',
                     timer: 2000,
                 }).then(()=> {
-                    document.location.href = '../admin/menu.php?pages=Data Kamar Hotel';
+                    document.location.href = '../admin/menu.php?pages=Data-Kamar-Hotel';
                 });
             </script>";
         }
     } elseif ($aksi === "add_reservasi") {
-        if( isset($_POST['reservasi'])) {
-            if( add_reservasi_kamar($_POST) > 0 ) {
+        if (isset($_POST['reservasi'])) {
+            if (add_reservasi_kamar($_POST) > 0) {
                 echo
                 "<script>
                     Swal.fire({
@@ -94,12 +94,113 @@
                         confirmButtonText: 'Mengerti',
                         timer: 2000,
                     }).then(()=> {
-                        document.location.href = '../admin/menu.php?pages=Kamar Hotel';
+                        document.location.href = '../admin/menu.php?pages=Kamar-Hotel';
                     });
                 </script>";
             }
         }
+    } elseif ($aksi === "edit_reservasi") {
+        if (isset($_POST['edit'])) {
+            if (edit_reservasi_kamar($_POST) > 0) {
+                echo
+                "<script>
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Transaksi Berhasil',
+                        text: 'Terima Kasih Telah Membayar Management Hotel Kami...',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Mengerti',
+                        timer: 2000,
+                    }).then(()=> {
+                        document.location.href = '../admin/menu.php?pages=Transaksi';
+                    });
+                </script>";
+            } else {
+                echo
+                "<script>
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Transaksi Gagal',
+                        text: 'Silahkan Periksa Kembali Uang Anda Apakah Tidak Kurang!',
+                        confirmButtonColor: '#DD3333',
+                        confirmButtonBorder: '#DD333',
+                        confirmButtonText: 'Batalkan',
+                        timer: 4000,
+                    }).then(()=> {
+                        document.location.href = '../admin/menu.php?pages=Transaksi';
+                    });
+                </script>";
+            }
+        }
+    } elseif ($aksi === "add_user") {
+        if (isset($_POST['tambah'])) {
+            if (add_user($_POST) > 0) {
+                echo
+                "<script>
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: 'Data Berhasil Di Tambah',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Mengerti',
+                        timer: 2000,
+                    }).then(()=> {
+                        document.location.href = '../admin/menu.php?pages=Data-Users';
+                    });
+                </script>";
+            }
+        }
+    } elseif ($aksi === "edit_user") {
+        if (isset($_POST['edit'])) {
+            if (edit_user($_POST) > 0) {
+                echo
+                "<script>
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: 'Data Berhasil Di Edit',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Mengerti',
+                        timer: 2000,
+                    }).then(()=> {
+                        document.location.href = '../admin/menu.php?pages=Data-Users';
+                    });
+                </script>";
+            } else {
+                echo
+                "<script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Opps',
+                        text: 'Data Gagal Di Edit',
+                        confirmButtonColor: '#DD3333',
+                        confirmButtonText: 'Batalkan',
+                        timer: 2000,
+                    }).then(()=> {
+                        document.location.href = '../admin/menu.php?pages=Data-Users';
+                    });
+                </script>";
+            }
+        }
+    } elseif ($aksi === "delete_user") {
+        $kode = $_GET['kode'];
+        if (delete_user($kode) > 0) {
+            echo
+            "<script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'Data Berhasil Di Delete',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'Mengerti',
+                    timer: 2000,
+                }).then(()=> {
+                    document.location.href = '../admin/menu.php?pages=Data-Users';
+                });
+            </script>";
+        }
     }
+
 
 
     ?>

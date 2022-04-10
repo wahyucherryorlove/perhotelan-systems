@@ -33,13 +33,29 @@
                             </select>
                         </div>
                         <div class="mb-2">
+                            <label for="" class="form-label">Status Kamar</label>
+                            <select name="aktif" id="" class="form-select">
+                                <option value="<?= $hasil['aktif']; ?>">
+                                    <?php
+                                    if ($hasil['aktif'] === "0") {
+                                        echo "Tidak Di Reservasi";
+                                    } else {
+                                        echo "Di Reservasi";
+                                    }
+                                    ?>
+                                </option>
+                                <option value="0">Tidak Di Reservasi</option>
+                                <option value="1">Di Reservasi</option>
+                            </select>
+                        </div>
+                        <div class="mb-2">
                             <label for="" class="form-label">Gambar Kamar</label>
                             <input type="hidden" name="photoLama" id="" value="<?= $hasil['photo'] ?>">
                             <input type="file" class="form-control" name="photo">
                         </div>
                         <div class="mt-3">
                             <button name="edit" class="btn btn-success">Edit Data</button>
-                            <a href="menu.php?pages=Data Kamar Hotel" class="btn btn-danger">Kembali</a>
+                            <a href="menu.php?pages=Data-Kamar-Hotel" class="btn btn-danger">Kembali</a>
                         </div>
                     <?php } ?>
                 </form>

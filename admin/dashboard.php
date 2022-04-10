@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <h2 class="display-6">Selamat Datang, Wahyudi Umar ( Administrator )</h2>
+                <h2 class="display-6">Selamat Datang, <?= $_SESSION['nama_user'] ?>( Administrator )</h2>
             </div>
         </div>
 

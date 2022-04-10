@@ -30,7 +30,7 @@
                     </div>
                     <div class="mt-3">
                         <button name="tambah" class="btn btn-success">Tambah Data</button>
-                        <a href="menu.php?pages=Data Kamar Hotel" class="btn btn-danger">Kembali</a>
+                        <a href="menu.php?pages=Data-Kamar-Hotel" class="btn btn-danger">Kembali</a>
                     </div>
                 </form>
             </div>

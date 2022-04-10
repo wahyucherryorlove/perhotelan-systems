@@ -66,15 +66,27 @@
                         <?php endforeach; ?>
                     </div>
                     <hr class="mt-3">
-                    <div class="mb-3 d-md-flex d-block align-items-center">
+                    <div class="mb-2 align-items-center">
                         <label for="" class="form-label">Lama Menginap :</label>
-                        <div class="col-md-3">
-                            <input type="number" class="form-control d-inline-block ms-md-3 ms-0" name="lamaMenginap" placeholder="Lama Menginap">
-                        </div>
+                        <input type="number" class="form-control" name="lamaMenginap" placeholder="Lama Menginap" required max="30">
                     </div>
-                    <button class="btn btn-success w-100" name="reservasi">Room Reservation</button>
-                </form>
+
+                    <div class="mb-2">
+                        <label for="" class="form-label">Nama User</label>
+                        <select class="form-select" name="user" required id="user">
+                            <option value="">Pilih User</option>
+                            <?php
+                            $sqlUser = $conn->query("SELECT * FROM tbl_user WHERE status = '0'");
+                            while ($hasilUser = $sqlUser->fetch_assoc()) :
+                            ?>
+                                <option value="<?= $hasilUser['id'] ?>"><?= $hasilUser['nama'] ?></option>
+                            <?php endwhile; ?>
+                        </select>
+                    </div>
             </div>
+            <button class="btn btn-success w-100" name="reservasi">Room Reservation</button>
+            </form>
         </div>
+    </div>
     </div>
 </section>
